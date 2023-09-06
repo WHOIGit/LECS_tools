@@ -1,0 +1,11 @@
+[lecs_tools]
+name = "LECS_tools"
+version = "0.0.1"
+dependencies = [
+	"xarray",
+	"numpy",
+	"pandas",
+	"tqdm",
+	"urllib",
+	"python_version<'3.11'",
+]

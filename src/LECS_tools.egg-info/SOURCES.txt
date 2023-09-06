@@ -1,0 +1,10 @@
+README.md
+pyproject.toml
+setup.cfg
+setup.py
+src/LECS_tools/__init__.py
+src/LECS_tools/_internalParserFuncsV2.py
+src/LECS_tools.egg-info/PKG-INFO
+src/LECS_tools.egg-info/SOURCES.txt
+src/LECS_tools.egg-info/dependency_links.txt
+src/LECS_tools.egg-info/top_level.txt
