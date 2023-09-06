@@ -14,11 +14,22 @@ from urllib.request import urlopen
 from tqdm import tqdm as bar
 
 ### params for parsing
-# RINKO_CALS
+# RINKO_CALS_temp
 A = -1.219367e1
 B = 2.134089e1
 C = -3.559172e00
 D = 6.691104e-01
+
+## RINK_CALS_DO (SENSING FILM A)
+A_o2 = -4.382235e01
+B_o2 = 1.398755e02
+C_o2 = -4.119456e-01
+D_o2 = 9.934000e-03
+E_o2 = 4.000000e-03
+F_o2 = 4.440000e-05
+G_o2 = 0.000000e+00
+H_o2 = 1.000000e+00
+
 
 ## Dline variable names
 namesDline = (
@@ -151,7 +162,10 @@ def DlineParser(dlinesList,
     DlineDataFrame['v'] = DlineDataFrame['v'] * 0.001
     DlineDataFrame['w'] = DlineDataFrame['w'] * 0.001
     Volt = DlineDataFrame['temp']
+    voltO2 = DlineDataFrame['DO']
     DlineDataFrame['temp'] = A+B*Volt+C*Volt**2+D*Volt**3
+    Pprime = ((A_o2) /( 1 + D_o2*(DlineDataFrame['temp'] -25))) + ((B_o2) / ((voltO2 - F_o2)*(1+D_o2*(DlineDataFrame['temp'] -25)) + C_o2 + F_o2))
+    DlineDataFrame['DO_percent'] = G_o2 + H_o2 * Pprime
     
     DlineDataFrame.set_index(idxArray,inplace=True)
     # print(DlineDataFrame.head())
