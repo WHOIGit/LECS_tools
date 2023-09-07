@@ -37,8 +37,8 @@ def phCal_multiVarLinReg_ph_temp(rawPhCounts,temp, calCoeffs=None,**kwargs):
         calDict = json.load(jsonFile)
 
         model = LinearRegression()
-        model.coef_ = np.array(calDict['coeffs'])
-        model.intercept_ = np.array(calDict['intercept'])
+        model.coef_ = np.array(calDict['coef_'])
+        model.intercept_ = np.array(calDict['intercept_'])
         inputs = np.vstack([
             rawPhCounts,
             temp
