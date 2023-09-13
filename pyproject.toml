@@ -8,5 +8,6 @@ dependencies = [
 	"tqdm",
 	"urllib",
 	"scikit-learn",
+	"scipy",
 	"python_version<'3.11'",
 ]
