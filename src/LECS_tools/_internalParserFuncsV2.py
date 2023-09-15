@@ -455,6 +455,7 @@ def parseDatabaseLines(dataLines, barFlag=False):
     Dlines = timeAlignmentV2(Dlines, Slines)
     # print(Dlines.head())
     parsedDataframe = Dlines[~np.isnat(Dlines.time)]
+    sDataFrame = Slines[~np.isnat(Slines.time)]
     
     # return Slines, Dlines
-    return parsedDataframe, Slines
+    return parsedDataframe, sDataFrame
