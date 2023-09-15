@@ -457,4 +457,4 @@ def parseDatabaseLines(dataLines, barFlag=False):
     parsedDataframe = Dlines[~np.isnat(Dlines.time)]
     
     # return Slines, Dlines
-    return parsedDataframe
+    return parsedDataframe, Slines
