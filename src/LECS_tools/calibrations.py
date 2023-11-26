@@ -12,8 +12,26 @@ from sklearn.linear_model import LinearRegression
 import pandas as pd
 import json
 import os
+do_cal_coeffs = dict(
+A_o2 = -4.382235e01,
+B_o2 = 1.398755e02,
+C_o2 = -4.119456e-01,
+D_o2 = 9.934000e-03,
+E_o2 = 4.000000e-03,
+F_o2 = 4.440000e-05,
+G_o2 = 0.000000e+00,
+H_o2 = 1.000000e+00,
+)
 
-
+def convert_raw_o2(voltO2,temp,cal_coeffs=do_cal_coeffs):
+    """
+    
+    
+    """
+    
+    Pprime = ((cal_coeffs['A_o2']) /( 1 + cal_coeffs['D_o2']*(temp -25))) + (cal_coeffs['B_o2'] / ((voltO2 - cal_coeffs['F_o2'])*(1+cal_coeffs['D_o2']*(temp -25)) + cal_coeffs['C_o2'] + cal_coeffs['F_o2']))
+    do_percent = cal_coeffs['G_o2'] + cal_coeffs['H_o2'] * Pprime
+    return do_percent
 
 
 def phCal_multiVarLinReg_ph_temp(rawPhCounts,temp, calCoeffs=None,**kwargs):
