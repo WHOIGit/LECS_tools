@@ -419,26 +419,34 @@ def timeAlignmentV2(data, sLines,
 
 def parseDatabaseLines(dataLines, barFlag=False):
     """
+    This is a wrapper function to do all the parsing of the raw data lines.
+    It does the S and D lines and then combines everything into one pandas dataframe
     
+
+    Args:
+        dataLines (list): list of lines of raw data from the LECS system
+        barFlag (bool, optional): _description_. Defaults to False.
+
+    Returns:
+        _type_: _description_
     """
     
-    ii = 0
+    ii = 0 ## iterator
+    
+    ## empty lists to fill
     DlinesPre = []
     SlinesPre = []
+    ## this is unused right now #TODO: add gps parsing when the gps is working
     gpsPre = []
     idx = 0
+    ## optional print debugging line
     # print('Splitting D and Slines')
-    for l in bar(dataLines, disable=True):
-        # print(
-        # l = l.replace('<td>','').replace('</td>','')
-        # print(str(ii) + ':' + l)
-        l = l.strip()
-        # if 'D:' in l:
-        #     DlinesPre.append(l)
-        # elif 'S:' in l:
-        #     SlinesPre.append(l)
-        # elif '$' in l:
-        #     gpsPre.append(l)
+    for l in bar(dataLines, disable=True): ## "bar" function creates a progress bar for the loop
+
+        l = l.strip() # strip empty spaces in data line
+        
+        # sort by type of data 
+        # TODO: add Met parsing when the met data is working
         if 'D:' in l:
             DlinesPre.append((idx, l))
         elif 'S:' in l:
@@ -447,11 +455,8 @@ def parseDatabaseLines(dataLines, barFlag=False):
             gpsPre.append((idx,l))
         idx += 1    
             
-        ii+=1
+        ii+=1 ## increment the iterator (this is old fucntionality and doesnt really do anything (to be removed))
             
-    # DlinesPre, SlinesPre, gpsPre ## thiis the results of part1 but I am baking it all into one function here
-    # print('Parse D lines')
-    # print(DlinesPre)
     Dlines = DlineParser(DlinesPre)
     # print('Parse S lines')
     Slines = SlineParser(SlinesPre)
