@@ -14,7 +14,7 @@ from urllib.request import urlopen
 from tqdm import tqdm as bar
 
 ### params for parsing
-# RINKO_CALS_temp
+# RINKO_CALS_temp - for the serial number 
 A = -1.219367e1
 B = 2.134089e1
 C = -3.559172e00
@@ -31,7 +31,7 @@ G_o2 = 0.000000e+00
 H_o2 = 1.000000e+00
 
 
-## Dline variable names
+## Dline variable names from the raw LECS data
 namesDline = (
     'count',
     'pressure',
@@ -72,11 +72,8 @@ dLineFullLength = len(namesDline)
 
 def loadLECSdata(url='https://gems.whoi.edu/LECSrawdata/'):
     """
-    
-    
-
-    Args:
-        url (str, optional): _description_. Defaults to 'https://gems.whoi.edu/LECSrawdata/'.
+    This function loads the raw data printed to the raw data page on the LECS website.
+    Its useful for testing parsing but its really an artefact of the old methods.
     """
     fid=urlopen('https://gems.whoi.edu/LECSrawdata/')
     dataLines = []
@@ -123,10 +120,17 @@ def DlineParser(dlinesList,
                 names = namesDline,
                 ):
     """
-    parse a list of dlines into a pandas dataframe
-    
-    
+    This function parses the D lines (Data lines) from the LECS raw data and returns a pandas dataframe.
+    It also applies the calibration coefficients to the data.
+    A follow up step is required to align the data with the S lines (status lines) which contain the timestamps.
+    This is done in the function alignTimeWithData.
+    Args:
+        dlinesList (list): List of D-line strings
+        correctNumEntries (int, optional): number of data points in each line. Defaults to 16.
+        names (_type_, optional): names of the data columns. Defaults to namesDline.
 
+    Returns:
+        _type_: _description_
     """
     
     # dline parser data entries
