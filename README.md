@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 # Tools for data processing LECS data
 
 
