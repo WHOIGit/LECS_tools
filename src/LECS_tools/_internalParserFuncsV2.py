@@ -237,29 +237,36 @@ def SlineParser(slinesList,timeOnly=True):
             SlineArray.append(t.split(',')[:6]) # split the line by commas including only the time
         return SlineArray
         
-    # now stack the data into a dataframe
-    # SlineArray = np.vstack(SlineArray) 
-    # SlineDataFrame = pd.DataFrame(SlineArray, 
-    #                               columns = namesSline,dtype=float)
-    
-    # return SlineArray
-    
+
     
 
 def alignTimeWithData(data, sLines, useCount2sort=False,
                       samplingFrequencyHz=16,
                       lowTimeCutoff='2022', highTimeCutoff='now'):
-    """
-    
-    
+    """_summary_
 
     Args:
-        data (_type_): _description_
-        time (_type_): _description_
+        data (pandas dataframe): _description_
+        sLines (pandas dataframe): _description_
+        useCount2sort (alternate soring method (untested)): _description_. Defaults to False.
+        samplingFrequencyHz (int, optional): _description_. Defaults to 16.
+        lowTimeCutoff (str, optional): _description_. Defaults to '2022'.
+        highTimeCutoff (str, optional): _description_. Defaults to 'now'.
+
+    Raises:
+        RuntimeError: _description_
+        RuntimeError: _description_
+
+    Returns:
+        _type_: _description_
     """
+
     # add an empty column to the data and fill with time values at indicies that are aligned
     timestep = pd.Timedelta(1/samplingFrequencyHz, unit='s')
     dataRev = data.copy()
+    
+    if useCount2sort:
+        print("Use count to sort is untested and doesnt work super well.. make different choices")
     
     if useCount2sort:
         # Loop throough the slines and start filling inthe time values
@@ -425,7 +432,7 @@ def parseDatabaseLines(dataLines, barFlag=False):
 
     Args:
         dataLines (list): list of lines of raw data from the LECS system
-        barFlag (bool, optional): _description_. Defaults to False.
+        barFlag (bool, optional): Do you want a loading bar?. Defaults to False.
 
     Returns:
         _type_: _description_
@@ -457,14 +464,16 @@ def parseDatabaseLines(dataLines, barFlag=False):
             
         ii+=1 ## increment the iterator (this is old fucntionality and doesnt really do anything (to be removed))
             
+    ## parse the data lines
     Dlines = DlineParser(DlinesPre)
     # print('Parse S lines')
     Slines = SlineParser(SlinesPre)
     # print(Slines.head())
+    ## run the time alignment
     Dlines = timeAlignmentV2(Dlines, Slines)
     # print(Dlines.head())
+    # remove bad timestamps
     parsedDataframe = Dlines[~np.isnat(Dlines.time)]
     sDataFrame = Slines[~np.isnat(Slines.time)]
-    
-    # return Slines, Dlines
+
     return parsedDataframe, sDataFrame
