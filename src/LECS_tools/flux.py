@@ -14,7 +14,7 @@ import xarray as xr
 
 
 
-def spectralECflux(df, x1, x2 freq='60min', fs=16, windowMinutes=30, high=0.125, low=1/(15*60)):
+def spectralECflux(df, x1, x2, freq='60min', fs=16, windowMinutes=30, high=0.125, low=1/(15*60)):
     """_summary_
 
     Args:
