@@ -1,6 +1,6 @@
 [lecs_tools]
 name = "LECS_tools"
-version = "0.0.1"
+version = "1.0.2"
 dependencies = [
 	"xarray",
 	"numpy",
